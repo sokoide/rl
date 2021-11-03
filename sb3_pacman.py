@@ -9,6 +9,7 @@ ENV_ID = 'MsPacman-v0'
 NUM_ENV = 8
 STEPS = 5_000
 
+
 def make_env(env_id, rank, seed=0):
     def _init():
         env = gym.make(env_id)
@@ -20,6 +21,7 @@ def make_env(env_id, rank, seed=0):
         env.seed(seed + rank)
         return env
     return _init
+
 
 def main():
     env = DummyVecEnv([make_env(ENV_ID, i) for i in range(NUM_ENV)])
@@ -35,7 +37,8 @@ def main():
         action, _states = model.predict(obs)
         obs, rewards, dones, info = env.step(action)
         env.render()
-        time.sleep(1/60)
+        time.sleep(1 / 60)
+
 
 if __name__ == "__main__":
     main()
