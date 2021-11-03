@@ -46,11 +46,11 @@ class Env():
         if self._maze[y][x] == 3:
             # Peach
             print('x:{}, y:{}, met Peach'.format(x, y))
-            reward = 1
+            reward = 5
             done = True
         elif self._maze[y][x] == 2:
             # Bower
-            reward = -2
+            reward = -5
 
         return [x, y], reward, done
 
@@ -69,14 +69,14 @@ class Q():
         return next_action
 
     def update(self, state, action, reward, next_state):
-        alpha = 0.9
-        gamma = 0.5
+        alpha = 0.5
+        gamma = 0.9
         next_max_q = max(self._Q[next_state[1]][next_state[0]])
 
         x, y = state[0], state[1]
 
         self._Q[y][x][action] = (
-            1-alpha) * self._Q[y][x][action] + alpha * (reward + gamma * next_max_q)
+            1 - alpha) * self._Q[y][x][action] + alpha * (reward + gamma * next_max_q)
 
     def dump(self):
         print('    ', end='')
